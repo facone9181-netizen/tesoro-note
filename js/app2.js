@@ -204,22 +204,11 @@
       ])
     ]);
 
-    // ----- 블록 추가 바 -----
-    var camInp = h('input', { type: 'file', accept: 'image/*', capture: 'environment', style: 'display:none' });
-    var albumInp = h('input', { type: 'file', accept: 'image/*', multiple: true, style: 'display:none' });
-    camInp.addEventListener('change', function () { addPhotos(book, camInp.files); camInp.value = ''; });
-    albumInp.addEventListener('change', function () { addPhotos(book, albumInp.files); albumInp.value = ''; });
-
-    // 심플한 흰색 블록 — + 를 누를 때만 기록 옵션이 나타남
-    var addMenu = h('div', { class: 'add-menu' }, [
-      h('button', { class: 'btn', onclick: function () { addManualBlock(book); } }, [h('span', { html: svg('pen') }), '직접 쓰기']),
-      h('button', { class: 'btn primary', onclick: function () { camInp.click(); } }, [h('span', { html: svg('camera') }), '사진으로 기록']),
-      h('button', { class: 'btn', onclick: function () { albumInp.click(); } }, [h('span', { html: svg('image') }), '앨범에서 추가'])
+    // ----- 블록 추가 바 (텍스트 기록 바로 추가) -----
+    var addbar = h('button', { class: 'add-card add-btn', onclick: function () { addManualBlock(book); } }, [
+      h('span', { class: 'add-plus', html: svg('plus') }),
+      h('span', { class: 'muted small', text: '기록 추가' })
     ]);
-    var addPlus = h('button', { class: 'add-plus', title: '기록 추가', html: svg('plus') });
-    var addHead = h('div', { class: 'add-head' }, [addPlus, h('span', { class: 'muted small add-hint', text: '기록 추가' })]);
-    var addbar = h('div', { class: 'add-card' }, [addHead, addMenu, camInp, albumInp]);
-    addHead.addEventListener('click', function () { addbar.classList.toggle('open'); });
 
     // 정렬은 항상 최신 기록 먼저 (정렬 선택 UI 없음)
     var list = h('div', { class: 'block-list' });
@@ -300,19 +289,7 @@
       return card;
     }
 
-    // 사진 썸네일 (접기/확대)
-    if (bl.type === 'photo' && bl.photoId) {
-      var thumbWrap = h('div', { class: 'blk-photo' });
-      Photo.photoObjectUrl(bl.photoId).then(function (url) {
-        if (!url) { thumbWrap.appendChild(h('span', { class: 'muted tiny', text: '사진 불러오는 중…' })); return; }
-        var img = h('img', { src: url, class: 'thumb', onclick: function () { zoomPhoto(url); } });
-        thumbWrap.appendChild(img);
-      });
-      card.appendChild(h('details', { class: 'blk-photo-det' }, [h('summary', { text: '원본 사진' }), thumbWrap]));
-    }
-
-    // OCR 상태
-    card.appendChild(ocrBar(bl));
+    // (사진·OCR 기능 제거 — 텍스트 기록 전용)
 
     // 본문 에디터
     var bodyEl = h('div', { class: 'editor body-editor', 'data-ph': '문장을 입력하세요' });

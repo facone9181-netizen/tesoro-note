@@ -1,5 +1,5 @@
 /* pharmarom tesoro — 서비스워커 (앱 셸 오프라인 캐시) */
-var CACHE = 'tesoro-note-v1';
+var CACHE = 'tesoro-note-v2';
 var SHELL = [
   './', './index.html', './app.css',
   './js/util.js', './js/config.js', './js/db.js', './js/store.js', './js/photo.js',
