@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "tesoro-note",
+      "runtimeExecutable": "py",
+      "runtimeArgs": ["-m", "http.server", "9321", "--directory", "C:/Users/shinyujin/Desktop/claude code/tesoro-note"],
+      "port": 9321,
+      "autoPort": false
+    }
+  ]
+}
